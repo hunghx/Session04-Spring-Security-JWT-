@@ -30,12 +30,12 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
                 // tạo usernamepasswordauthtoken
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                SecurityContextHolder.getContext().setAuthentication(auth); // da xac thuc bang token
             }
         }catch (Exception e){
             log.error("security filter chain err :",e.getMessage());
         }
-        filterChain.doFilter(request,response);// gửi request tiếp tục tới cac thành pần khác
+        filterChain.doFilter(request,response);// gửi request tiếp tục tới cac thành phần khác
 
     }
     private String getTokenFromRequest(HttpServletRequest request){

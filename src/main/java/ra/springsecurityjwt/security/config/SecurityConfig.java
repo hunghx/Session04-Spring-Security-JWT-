@@ -20,22 +20,22 @@ import ra.springsecurityjwt.security.jwt.JwtProvider;
 import ra.springsecurityjwt.security.principle.UserDetailsServiceCustom;
 
 @Configuration
-//@EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig {
     @Bean
     public JwtEntryPoint jwtEntryPoint() {
         return new JwtEntryPoint();
-    }
+    } // xu li loi lien quan toi authentication
 
     ;
     @Autowired
-    private JwtProvider jwtProvider;
+    private JwtProvider jwtProvider; // bo cung cap 3 chuc nang cua jwt
+
     @Autowired
-    private UserDetailsServiceCustom userDetailsServiceCustom;
+    private UserDetailsServiceCustom userDetailsServiceCustom; // cung cap chuc nang loadByUsername
 
     @Bean
-    public JwtAuthTokenFilter jwtAuthTokenFilter() {
+    public JwtAuthTokenFilter jwtAuthTokenFilter() { // laf 1 tang, hay 1 mang loc request gui len
         return new JwtAuthTokenFilter(jwtProvider, userDetailsServiceCustom);
     }
 
