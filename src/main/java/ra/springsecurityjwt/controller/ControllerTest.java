@@ -17,9 +17,9 @@ public class ControllerTest {
     public ResponseEntity<?> admin(){
         return new ResponseEntity<>("ok", HttpStatus.OK);
     }
-     @GetMapping("/v3/test")
+     @GetMapping("/user/test")
     public ResponseEntity<?> anyRequest(){
-        return new ResponseEntity<>("ok", HttpStatus.OK);
+        return new ResponseEntity<>("ok user", HttpStatus.OK);
     }
 
 }
