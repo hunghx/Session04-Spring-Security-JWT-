@@ -1,16 +1,32 @@
 package ra.springsecurityjwt;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
 import ra.springsecurityjwt.entity.Role;
 import ra.springsecurityjwt.entity.RoleName;
 import ra.springsecurityjwt.repository.RoleRepository;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 @SpringBootApplication
 public class SpringSecurityJwtApplication {
+    @Bean
+    public Storage storage() throws IOException {
+        InputStream inputStream = new ClassPathResource("firebase-config.json").getInputStream();
+//        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("firebase-config.json");
+        return StorageOptions.newBuilder()
+                .setCredentials(GoogleCredentials.fromStream(inputStream))
+                .build()
+                .getService();
+    }
     @Bean
     public ModelMapper modelMapper(){
         return  new ModelMapper();

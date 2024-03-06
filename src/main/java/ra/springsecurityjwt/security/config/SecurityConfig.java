@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import ra.springsecurityjwt.security.jwt.JwtAuthTokenFilter;
 import ra.springsecurityjwt.security.jwt.JwtProvider;
 import ra.springsecurityjwt.security.principle.UserDetailsServiceCustom;
@@ -59,10 +60,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-                .exceptionHandling(e -> e.authenticationEntryPoint(jwtEntryPoint()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // phi trạng thai
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers("/api.com/v2/auth/**").permitAll()
+                                .requestMatchers("/api.com/v5/admin/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/api.com/v2/admin/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/api.com/v2/user/**").hasAuthority("ROLE_USER")
                                 .requestMatchers("/api.com/v2/mod/**").hasAuthority("ROLE_MOD")
@@ -72,5 +73,7 @@ public class SecurityConfig {
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(jwtAuthTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
+
     }
+
 }

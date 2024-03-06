@@ -16,8 +16,8 @@ import java.util.Map;
 @Slf4j
 public class JwtEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        log.error("authentication fail cause :",authException.getCause());
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        log.error("authentication fail cause :",authException.getMessage());
         response.setHeader("error","authorize");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(403);
