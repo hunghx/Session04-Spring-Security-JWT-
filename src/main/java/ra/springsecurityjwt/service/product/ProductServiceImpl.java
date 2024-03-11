@@ -8,6 +8,7 @@ import ra.springsecurityjwt.dto.request.ProductRequest;
 import ra.springsecurityjwt.dto.response.ProductResponse;
 import ra.springsecurityjwt.entity.Product;
 import ra.springsecurityjwt.exception.NotFoundException;
+import ra.springsecurityjwt.repository.CatalogRepository;
 import ra.springsecurityjwt.repository.ProductRepository;
 import ra.springsecurityjwt.service.UploadService;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class ProductServiceImpl implements IProductService{
     private final UploadService uploadService;
     private final ProductRepository productRepository;
+    private final CatalogRepository catalogRepository;
     private final ModelMapper mapper;
     @Override
     public List<Product> findAllForAdmin() {
@@ -72,5 +74,12 @@ public class ProductServiceImpl implements IProductService{
     @Override
     public void toggleStatus(Long id) {
         productRepository.toggleStatus(id);
+
+    }
+
+    @Override
+    public List<Product> findAllNyCatalog(Long catalogId) throws NotFoundException {
+        return productRepository.findByCatalog(catalogRepository.
+                findById(catalogId).orElseThrow(() -> new NotFoundException("không tìm tấy id")));
     }
 }

@@ -76,4 +76,8 @@ public class ProductController {
         productService.toggleStatus(id);
         return new ResponseEntity<>( HttpStatus.NO_CONTENT);
     }
+    @GetMapping("/catalogs/{id}")
+    public ResponseEntity<?> findPproductByCatalog(@PathVariable Long id) throws NotFoundException {
+        return new ResponseEntity<>(new ResponseDtoSuccess(productService. findAllNyCatalog(id), HttpStatus.OK), HttpStatus.OK);
+    }
 }

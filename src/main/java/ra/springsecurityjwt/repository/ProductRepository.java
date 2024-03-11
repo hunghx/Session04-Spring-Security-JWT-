@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import ra.springsecurityjwt.entity.Catalog;
 import ra.springsecurityjwt.entity.Product;
 
 import java.util.List;
@@ -19,5 +20,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     void toggleStatus(@Param("id") Long id);
 
     boolean  existsByProductName(String productName);
+
+    List<Product> findByCatalog(Catalog catalog);
 
 }

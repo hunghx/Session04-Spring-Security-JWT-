@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ra.springsecurityjwt.dto.response.ResponseDtoError;
+import ra.springsecurityjwt.exception.DataFieldExistException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,5 +19,9 @@ public class HandleControllerAdvice {
         ex.getBindingResult().getFieldErrors()
                 .forEach(field -> map.put(field.getField(),field.getDefaultMessage()) );
         return new ResponseEntity<>(new ResponseDtoError(map,HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(DataFieldExistException.class)
+    public ResponseEntity<?> handleDataFieldExist(DataFieldExistException ex){
+        return new ResponseEntity<>(new ResponseDtoError(ex.getFieldError(),HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
     }
 }

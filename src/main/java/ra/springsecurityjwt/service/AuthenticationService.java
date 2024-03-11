@@ -23,9 +23,7 @@ import ra.springsecurityjwt.repository.RoleRepository;
 import ra.springsecurityjwt.repository.UserRepository;
 import ra.springsecurityjwt.security.jwt.JwtProvider;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -39,10 +37,14 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     public void signUp(SignUpRequest signUpRequest) throws DataFieldExistException {
         if (userRepository.existsByUsername(signUpRequest.getUsername())){
-            throw new DataFieldExistException("username is exist");
+            Map<String, String> map = new HashMap<>();
+            map.put("username","username is exists !");
+            throw new DataFieldExistException(map);
         }
         if (userRepository.existsByEmail(signUpRequest.getEmail())){
-            throw new DataFieldExistException("email is exist");
+            Map<String, String> map = new HashMap<>();
+            map.put("email","email is exists !");
+            throw new DataFieldExistException(map);
         }
         User user = mapper.map(signUpRequest, User.class); // chuyển dổi
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword())); // mã hóa mật khâu

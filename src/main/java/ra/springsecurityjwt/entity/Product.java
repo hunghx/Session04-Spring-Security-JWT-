@@ -23,4 +23,7 @@ public class Product {
     private String description;
     private String imageUrl;
     private boolean status;
+    @ManyToOne
+    @JoinColumn(name = "catalogId")
+    private Catalog catalog;
 }
