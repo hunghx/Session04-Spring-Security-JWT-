@@ -26,6 +26,7 @@ public class User {
     @Column(unique = true)
     private String email;
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    @Column(columnDefinition = "date")
     private Date birthDay;
     private boolean status;
     @ManyToMany(fetch = FetchType.EAGER)
