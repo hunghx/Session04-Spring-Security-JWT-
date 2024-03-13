@@ -19,6 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api.com/v5/admin/catalogs")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class CatalogController {
     private  final ICatalogService catalogService;
     // danh sách tất cả sp
